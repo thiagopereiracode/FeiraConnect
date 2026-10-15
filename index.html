@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FeiraConnect | Gestão da feira</title><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">FC</div><div><strong>FeiraConnect</strong><small>GESTÃO DA FEIRA</small></div></div>
+  <div class="nav-label">MENU PRINCIPAL</div>
+  <button class="nav-item active" data-page="inicio"><span>▦</span> Visão geral</button>
+  <button class="nav-item" data-page="produtos"><span>▤</span> Produtos e estoque</button>
+  <button class="nav-item" data-page="vendas"><span>↗</span> Vendas</button>
+  <button class="nav-item" data-page="caixa"><span>▣</span> Fechamento de caixa</button>
+  <button class="nav-item" data-page="excedentes"><span>♡</span> Excedentes e doações</button>
+  <div class="sidebar-bottom"><div class="status-dot"></div><div><b>Sistema local</b><small>Dados salvos neste computador</small></div></div>
+</aside>
+<main class="main">
+<header class="topbar"><div><span class="eyebrow">PAINEL DE CONTROLE</span><h1 id="page-title">Visão geral</h1></div><div class="today" id="today"></div></header>
+<section class="page active" id="page-inicio">
+  <div class="welcome"><div><span class="eyebrow light">SEJA BEM-VINDO AO FEIRACONNECT</span><h2>Organize sua feira com mais facilidade.</h2><p>Acompanhe seus produtos, vendas e aproveitamento de alimentos em um só lugar.</p></div><div class="welcome-icon">🌿</div></div>
+  <div class="stats">
+    <article class="stat-card"><div class="stat-top"><span>Produtos cadastrados</span><span class="stat-icon green">▤</span></div><strong id="stat-produtos">0</strong><small>Itens no catálogo</small></article>
+    <article class="stat-card"><div class="stat-top"><span>Unidades em estoque</span><span class="stat-icon blue">▦</span></div><strong id="stat-unidades">0</strong><small>Quantidade disponível</small></article>
+    <article class="stat-card"><div class="stat-top"><span>Vendas de hoje</span><span class="stat-icon orange">↗</span></div><strong id="stat-vendas">0</strong><small>Transações registradas</small></article>
+    <article class="stat-card"><div class="stat-top"><span>Faturamento de hoje</span><span class="stat-icon purple">R$</span></div><strong id="stat-faturamento">R$ 0,00</strong><small>Total vendido hoje</small></article>
+  </div>
+  <div class="content-grid"><article class="panel"><div class="panel-heading"><div><h3>Produtos recentes</h3><p>Veja os itens cadastrados na feira.</p></div><button class="text-button" data-go="produtos">Ver produtos →</button></div><div id="recent-products" class="table-wrap"></div></article>
+  <article class="panel"><div class="panel-heading"><div><h3>Atenção ao estoque</h3><p>Produtos com 5 unidades ou menos.</p></div><span class="pill warning" id="low-count">0 alertas</span></div><div id="low-stock" class="low-list"></div><div class="tip-box"><span>✦</span><div><b>Dica para reduzir desperdício</b><p>Registre os excedentes e direcione alimentos próprios para consumo a quem precisa.</p></div></div></article></div>
+</section>
+<section class="page" id="page-produtos">
+  <div class="section-intro"><div><h2>Produtos e estoque</h2><p>Cadastre produtos e mantenha as quantidades atualizadas.</p></div><span class="pill success">Controle de inventário</span></div>
+  <div class="panel form-panel"><div class="panel-heading"><div><h3>Cadastrar produto</h3><p>Preencha as informações do produto.</p></div></div>
+  <form id="product-form" class="form-grid"><label>Nome do produto<input name="nome" required maxlength="100" placeholder="Ex.: Tomate"></label><label>Categoria<input name="categoria" required maxlength="60" placeholder="Ex.: Legumes"></label><label>Preço unitário (R$)<input name="preco" type="number" min="0" step="0.01" required placeholder="0,00"></label><label>Quantidade em estoque<input name="estoque" type="number" min="0" step="1" required placeholder="0"></label><div class="form-actions"><button class="primary" type="submit">＋ Cadastrar produto</button></div></form></div>
+  <article class="panel"><div class="panel-heading"><div><h3>Catálogo de produtos</h3><p id="products-count">0 produtos cadastrados</p></div><input id="product-search" class="search" placeholder="Buscar produto..." aria-label="Buscar produto"></div><div id="products-table" class="table-wrap"></div></article>
+</section>
+<section class="page" id="page-vendas">
+  <div class="section-intro"><div><h2>Registro de vendas</h2><p>Registre as vendas e dê baixa automática no estoque.</p></div></div>
+  <div class="panel form-panel"><div class="panel-heading"><div><h3>Nova venda</h3><p>Escolha um produto e informe a quantidade vendida.</p></div></div><form id="sale-form" class="form-grid"><label class="wide">Produto<select name="produto_id" id="sale-product" required><option value="">Cadastre um produto primeiro</option></select></label><label>Quantidade vendida<input name="quantidade" type="number" min="1" step="1" required placeholder="1"></label><div class="sale-preview"><span>Total estimado</span><strong id="sale-total">R$ 0,00</strong></div><div class="form-actions"><button class="primary" type="submit">✓ Registrar venda</button></div></form></div>
+  <article class="panel"><div class="panel-heading"><div><h3>Histórico de vendas</h3><p>Registros mais recentes primeiro.</p></div></div><div id="sales-table" class="table-wrap"></div></article>
+</section>
+<section class="page" id="page-caixa">
+  <div class="section-intro"><div><h2>Fechamento de caixa</h2><p>Confira as vendas do dia e registre os valores por forma de pagamento.</p></div></div>
+  <div class="cash-highlight"><div><span>Faturamento registrado hoje</span><strong id="cash-today">R$ 0,00</strong><small>Calculado com base nas vendas registradas.</small></div><div class="cash-symbol">R$</div></div>
+  <div class="panel form-panel"><div class="panel-heading"><div><h3>Registrar fechamento</h3><p>Informe quanto recebeu em cada forma de pagamento.</p></div></div><form id="cash-form" class="form-grid"><label>Recebido em dinheiro (R$)<input name="dinheiro" type="number" min="0" step="0.01" value="0" required></label><label>Recebido por Pix (R$)<input name="pix" type="number" min="0" step="0.01" value="0" required></label><label>Recebido em cartão (R$)<input name="cartao" type="number" min="0" step="0.01" value="0" required></label><label class="wide">Observações<textarea name="observacao" rows="2" placeholder="Ex.: conferência realizada ao final da feira"></textarea></label><div class="form-actions"><button class="primary" type="submit">Registrar fechamento</button></div></form></div>
+  <article class="panel"><div class="panel-heading"><div><h3>Fechamentos registrados</h3><p>Histórico dos fechamentos realizados.</p></div></div><div id="cash-table" class="table-wrap"></div></article>
+</section>
+<section class="page" id="page-excedentes">
+  <div class="section-intro"><div><h2>Excedentes e doações</h2><p>Registre alimentos excedentes e seu destino para incentivar o aproveitamento.</p></div><span class="pill success">Consumo consciente</span></div>
+  <div class="info-banner"><span>♡</span><div><b>Menos desperdício, mais impacto positivo</b><p>Registre alimentos próprios para consumo que serão destinados a doação ou reaproveitamento.</p></div></div>
+  <div class="panel form-panel"><div class="panel-heading"><div><h3>Novo registro de excedente</h3><p>Informe o alimento, a quantidade e o destino.</p></div></div><form id="surplus-form" class="form-grid"><label>Produto ou alimento<input name="produto" required placeholder="Ex.: Banana madura"></label><label>Quantidade (unidades)<input name="quantidade" type="number" min="1" step="1" required placeholder="Ex.: 8"></label><label class="wide">Destino<select name="destino" required><option value="">Selecione o destino</option><option>Doação para instituição</option><option>Doação para comunidade</option><option>Reaproveitamento</option><option>Compostagem</option><option>Outro destino</option></select></label><label class="wide">Observações<textarea name="observacao" rows="2" placeholder="Condição do alimento, responsável ou outras informações"></textarea></label><div class="form-actions"><button class="primary" type="submit">＋ Salvar registro</button></div></form></div>
+  <article class="panel"><div class="panel-heading"><div><h3>Histórico de excedentes</h3><p>Registros de destinação de alimentos.</p></div></div><div id="surplus-table" class="table-wrap"></div></article>
+</section>
+<footer>FeiraConnect <span>•</span> Sistema de apoio à gestão de feiras livres</footer>
+</main></div>
+<div id="toast" class="toast" role="status"></div>
+<script src="/script.js"></script>
+</body></html>
