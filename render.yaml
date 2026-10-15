@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: feiraconnect-demo
+    runtime: python
+    buildCommand: pip install -r APIs/requirements.txt
+    startCommand: gunicorn --chdir APIs app:app
